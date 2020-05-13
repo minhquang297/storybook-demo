@@ -1,28 +1,20 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
 
-class App extends Component {
+import './App.css'
+
+export default class App extends Component {
+  constructor () {
+    super()
+    this.inputElement = React.createRef()
+  }
+  componentDidMount () {
+    this.inputElement.current.focus()
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code>
-          </p>
-          <a
-            className="App-link"
-            href="https://coders-x.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Yêu anh Thịnh
-          </a>
-        </header>      
+      <div className='App'>
+        <input type='text' ref={this.inputElement}></input>   
       </div>
-    );
+    )
   }
 }
-
-export default App;
