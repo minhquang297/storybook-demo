@@ -6,7 +6,10 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^3.0.1",
-    "axios": "^0.19.2"
+    "axios": "^0.19.2",
+    "antd": "^4.2.1",
+    "react-bootstrap": "^1.0.1",
+    "bootstrap": "^4.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,81 +1,80 @@
 import React, { Component } from 'react'
+import { Container } from 'react-bootstrap'
+import {  Row, Col, Divider, Input } from 'antd'
+
 import axios from 'axios'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Books from './components/Books'
+import './App.css';
 
 export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      apiBooks: [],
-      valueInputSearch: '',
-      statusUnSearch: true,
-      resultSearch: []
+      books: [],
+      inputSearch: '',
+      booksFind: []
     }
-    this.onChangeInputSearch = this.onChangeInputSearch.bind(this)
-    this.searchBook = this.searchBook.bind(this)
-    this.searchBook = this.searchBook.bind(this)
   }
 
-  async getApiBooks() {
+  async getDataBooks() {
     try {
-      const response = await axios.get('https://express-demo-heroku.herokuapp.com/api/books');
+      const dataBooks = await axios.get('https://express-demo-heroku.herokuapp.com/api/books');
       this.setState({
-        apiBooks: this.state.apiBooks.concat(response.data)
+        books: dataBooks.data
       })
     } catch (error) {
-      console.error(error);
+      console.log(error)
     }
   }
 
-  onChangeInputSearch(event) {
-    this.setState({
-      valueInputSearch: event.target.value
+  searchBooks (value) {
+    const { books } = this.state
+    const resultSearch = books.filter((book, index) => {
+      return book.name.toLowerCase().includes(value.toLowerCase()) === true 
     })
-  }
-
-  searchBook() {
-    let { apiBooks, valueInputSearch } = this.state
-    if (valueInputSearch.length === 0) {
-      return
-    }
     this.setState({
-      resultSearch: apiBooks.filter((book, index) => {
-        let nameBook = book.name.toLowerCase()
-        return nameBook.includes(valueInputSearch.toLowerCase()) === true
-      }),
-      statusUnSearch: false
+      inputSearch: value,
+      booksFind: resultSearch
     })
   }
 
   componentDidMount() {
-    return this.getApiBooks()
+    return this.getDataBooks()
   }
 
   render() {
-    let { apiBooks, statusUnSearch, resultSearch } = this.state
+    const { books, inputSearch, booksFind } = this.state
+    const { Search } = Input
     return (
-      <div className='container mt-5'>
-        <div className='d-flex mb-4'>
-          <input className="px-2 mx-2" type="text" placeholder="Search"
-            aria-label="Search" onChange={this.onChangeInputSearch}></input>
-          <button className="btn btn-outline-success my-2 my-sm-0"
-            onClick={this.searchBook}>Search</button>
-        </div>
-        <div className='row'>
-          {
-            statusUnSearch
-              ? apiBooks.map((book, index) => {
-                return <Books key={index} imgUrl='https://loremflickr.com/640/360'
-                  titleBook={book.name} contentBook={book.description}></Books>
-              })
-              : resultSearch.map((book, index) => {
-                return <Books key={index} imgUrl='https://loremflickr.com/640/360'
-                  titleBook={book.name} contentBook={book.description}></Books>
-              })
-          }
-        </div>
+      <div>
+        <Container className='pt-4'>
+          <Search
+            placeholder="Tim kiem sach"
+            onSearch={value => this.searchBooks(value)}
+            style={{ width: 200 }}
+
+          />
+          <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}>List Books</Divider>
+          <Row gutter={[10, 24]} >
+            {
+              inputSearch === ''
+                ? books.map((book, index) => {
+                  return <Col className="gutter-row" key={index} sm={12} xs={24} md={8} lg={6}>
+                    <Books titleBook={book.name} descriptionBook={book.description}></Books>
+                  </Col>
+                })
+                : booksFind.map((book, index) => {
+                  return <Col className="gutter-row" key={index} sm={12} xs={24} md={8} lg={6}>
+                    <Books titleBook={book.name} descriptionBook={book.description}></Books>
+                  </Col>
+                })
+            }
+          </Row>
+        </Container>
       </div>
     )
   }
 }
+

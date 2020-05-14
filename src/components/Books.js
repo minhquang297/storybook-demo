@@ -1,18 +1,35 @@
 import React, { Component } from 'react'
+import { Card, Button } from 'antd';
 
-import './Books.css'
+const { Meta } = Card;
 
 export default class Books extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            loading: true
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            loading: false
+        })
+    }
+
     render() {
-        const { imgUrl, titleBook, contentBook } = this.props
+        const { titleBook, descriptionBook } = this.props
+        const { loading } = this.state
         return (
-            <div className="card-book card m-2">
-                <img src={imgUrl} className="card-img-top" alt="book"></img>
-                <div className="card-body">
-                    <h5 className="title-book card-title">{titleBook}</h5>
-                    <p className="content-book card-text">{contentBook}</p>
-                    <a href="/" className="btn btn-primary">View</a>
-                </div>
+            <div>
+                <Card
+                    hoverable
+                    loading={loading}
+                    cover={<img alt="example" src="https://placekitten.com/640/360" />}
+                >
+                    <Meta className='mb-2' title={titleBook} description={descriptionBook} />
+                    <Button type='default' href='/'>View</Button>
+                </Card>
             </div>
         )
     }
