@@ -25,7 +25,7 @@ export default class Books extends Component {
         <Card
           hoverable
           loading={loading}
-          cover={<img alt="example" src="https://placekitten.com/640/360" />}
+          cover={<img alt="example" src="https://placeimg.com/640/360/any" />}
         >
           <Meta
             className="mb-2"
