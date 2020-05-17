@@ -20,7 +20,7 @@ export default class App extends Component {
 
   async getDataBooks() {
     try {
-      const dataBooks = await axios.get('https://express-demo-heroku.herokuapp.com/api/books');
+      const dataBooks = await axios.get('https://minhquang-express-demo.herokuapp.com/api/books');
       this.setState({
         books: dataBooks.data
       })
@@ -32,7 +32,7 @@ export default class App extends Component {
   searchBooks (value) {
     const { books } = this.state
     const resultSearch = books.filter((book, index) => {
-      return book.name.toLowerCase().includes(value.toLowerCase()) === true 
+      return book.title.toLowerCase().includes(value.toLowerCase()) === true 
     })
     this.setState({
       inputSearch: value,
@@ -62,12 +62,12 @@ export default class App extends Component {
               inputSearch === ''
                 ? books.map((book, index) => {
                   return <Col className="gutter-row" key={index} sm={12} xs={24} md={8} lg={6}>
-                    <Books titleBook={book.name} descriptionBook={book.description}></Books>
+                    <Books titleBook={book.title} descriptionBook={book.description}></Books>
                   </Col>
                 })
                 : booksFind.map((book, index) => {
                   return <Col className="gutter-row" key={index} sm={12} xs={24} md={8} lg={6}>
-                    <Books titleBook={book.name} descriptionBook={book.description}></Books>
+                    <Books titleBook={book.title} descriptionBook={book.description}></Books>
                   </Col>
                 })
             }
