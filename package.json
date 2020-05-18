@@ -16,7 +16,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "build-static-webapp": "expo build:web"
+        "deploy-storybook": "storybook-to-ghpages"
     },
     "engines": {
         "node": "11.x"
@@ -30,6 +30,7 @@
     "devDependencies": {
         "@babel/core": "^7.9.6",
         "@storybook/react": "^5.3.18",
+        "@storybook/storybook-deployer": "^2.8.6",
         "babel-loader": "^8.1.0"
     }
 }
